@@ -1,0 +1,47 @@
+#redis
+spring:
+  profiles:
+    active: dev
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/quanxian-base?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: fz123456
+    platform: mysql
+
+    #连接池指定springboot2.02版本默认使用HikariCP 此处要替换成Druid
+    #下面为连接池补充设置，应用到上面所有数据源中
+    type: com.alibaba.druid.pool.DruidDataSource
+    #初始化大小，最小，最大
+    initialSize: 1
+    minIdle: 3
+    maxActive: 20
+    #配置获取连接等待超时的时间
+    maxWait: 60000
+    #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 60000
+    #配置一个连接池在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 30000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    #是否缓存preparedStatement,打开PSCache,并且指定每个连接上PSCache的大小，官方建议MySQl下
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+#    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+#    filters: stat,wall,slf4j
+#    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+#    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+logging:
+  path: E:/quanxianlog
+
+mybatis:
+  #实体类所做包
+  type-aliases-package: com.fyh.quanxian.model
+  #mapper.xml所在位置
+  mapper-locations: classpath:/mybatis-mappers/*
+  configuration:
+    map-underscore-to-camel-case: true
+
